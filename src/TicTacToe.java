@@ -28,7 +28,7 @@ public class TicTacToe
             {
                 validMove = false;
                 display();
-                System.out.print("\nPlayer " + player + ", it is your move.");
+                System.out.print("\n\nPlayer " + player + ", it is your move.");
                 //Now move validity check loop
                 do
                 {
@@ -49,7 +49,8 @@ public class TicTacToe
                     gameOver = isWin(player);
                     if (gameOver)
                     {
-                        System.out.println("Player " + player + " won the game");
+                        System.out.println("\nPlayer " + player + " won the game.\n");
+                        display();
                     }
                 }
 
@@ -59,7 +60,9 @@ public class TicTacToe
                     gameOver = isTie();
                     if (gameOver)
                     {
-                        System.out.println("It's a tie. Game over.");
+                        System.out.println("\nIt's a tie. Game over.\n");
+                        display();
+
                     }
                 }
 
@@ -78,7 +81,7 @@ public class TicTacToe
             gameOver = false;
             player = "X";
 
-            done = SafeInput.getYNConfirm(in, "Do you want to quit? [Y/N]");
+            done = SafeInput.getYNConfirm(in, "\nDo you want to quit? [Y/N]");
         } while (!done);
     }
 
@@ -214,7 +217,9 @@ public class TicTacToe
     private static boolean isDiagonalTie()
     {
         if ((board[0][0].equals("X") || board[1][1].equals("X") || board[2][2].equals("X")) && (board[0][0].equals("O") || board[1][1].equals("O") || board[2][2].equals("O")) && ((board[0][2].equals("X") || board[1][1].equals("X") || board[2][0].equals("X")) && ((board[0][2].equals("O") || board[1][1].equals("O") || board[2][0].equals("O")))))
-        { //I have a feeling I just committed a crime against programming, but I am not sure how to get around it.
+        {
+            //I have a feeling I just committed a crime against programming, but I am not sure how to get around it.
+            //But the conditions basically say if both players have moves in both the diagonals, it's impossible to win with them.
             return true;
         }
         return false;
