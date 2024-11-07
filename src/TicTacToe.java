@@ -13,13 +13,17 @@ public class TicTacToe
         Scanner in = new Scanner(System.in);
         String player = "X";
         boolean done = false;
-        boolean playing = true;
+        boolean gameOver = false;
         boolean validMove = false;
         int rowPlay;
         int colPlay;
+        int moveCount = 0;
 
         do {
+            //Need to reset things for a new game at the start
             clearBoard();
+            moveCount = 0;
+
             do
             {
                 validMove = false;
@@ -34,7 +38,29 @@ public class TicTacToe
                     if (!validMove)
                         System.out.println("Invalid move");
                 } while (!validMove);
+                //Now assign the valid moves and increment the move count.
                 board[rowPlay][colPlay] = player;
+                moveCount++;
+
+                //Now we need to test if the game is over after 5 turns have gone by.
+                if (moveCount >= 5)
+                {
+                    gameOver = isWin(player);
+                    if (gameOver)
+                    {
+                        System.out.println("Player " + player + " won the game");
+                    }
+                }
+
+                //Now to test if the game is a tie
+                if (moveCount >= 7)
+                {
+                    gameOver = isTie();
+                    if (gameOver)
+                    {
+                        System.out.println("It's a tie. Game over.");
+                    }
+                }
 
                 //This should alternate which player is acting.
                 if (player == "X")
@@ -45,10 +71,10 @@ public class TicTacToe
                 {
                     player = "X";
                 }
-            } while (playing);
+            } while (!gameOver);
 
             //Here we are resetting variables for a replay and
-            playing = true;
+            gameOver = false;
             player = "X";
 
             done = SafeInput.getYNConfirm(in, "Do you want to quit? [Y/N]");
@@ -97,5 +123,52 @@ public class TicTacToe
             retVal = true;
         }
         return retVal;
+    }
+
+    private static boolean isWin(String player)
+    {
+        if (isColWin(player) || isRowWin(player) || isDiagonalWin(player))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isColWin(String player)
+    {
+        for(int col = 0; col < COLS; col++)
+        {
+            if(board[0][col].equals(player) && board[1][col].equals(player) && board[2][col].equals(player))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isRowWin(String player)
+    {
+        for(int row = 0; row < ROWS; row++)
+        {
+            if(board[row][0].equals(player) && board[row][1].equals(player) && board[row][2].equals(player))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isDiagonalWin(String player)
+    {
+        if ((board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player)) || ((board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player))))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isTie()
+    {
+        if ()
     }
 }
