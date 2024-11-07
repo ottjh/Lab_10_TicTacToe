@@ -42,6 +42,7 @@ public class TicTacToe
                 board[rowPlay][colPlay] = player;
                 moveCount++;
 
+
                 //Now we need to test if the game is over after 5 turns have gone by.
                 if (moveCount >= 5)
                 {
@@ -53,7 +54,7 @@ public class TicTacToe
                 }
 
                 //Now to test if the game is a tie
-                if (moveCount >= 7)
+                if (moveCount >= 7 && !gameOver) // !gameOver to ensure tie message doesn't display after winning with 7 or more moves.
                 {
                     gameOver = isTie();
                     if (gameOver)
@@ -169,6 +170,53 @@ public class TicTacToe
 
     private static boolean isTie()
     {
-        if ()
+        if (isColTie() && isRowTie() && isDiagonalTie())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isColTie()
+    {
+        int tieColCount = 0;
+        for(int col = 0; col < COLS; col++)
+        {
+            if((board[0][col].equals("X") || board[1][col].equals("X") || board[2][col].equals("X")) && (board[0][col].equals("O") || board[1][col].equals("O") || board[2][col].equals("O")))
+            {
+                tieColCount++;
+                if (tieColCount ==3)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isRowTie()
+    {
+        int tieRowCount = 0;
+        for(int row = 0; row < COLS; row++)
+        {
+            if((board[0][row].equals("X") || board[1][row].equals("X") || board[2][row].equals("X")) && (board[0][row].equals("O") || board[1][row].equals("O") || board[2][row].equals("O")))
+            {
+                tieRowCount++;
+                if (tieRowCount ==3)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean isDiagonalTie()
+    {
+        if ((board[0][0].equals("X") || board[1][1].equals("X") || board[2][2].equals("X")) && (board[0][0].equals("O") || board[1][1].equals("O") || board[2][2].equals("O")) && ((board[0][2].equals("X") || board[1][1].equals("X") || board[2][0].equals("X")) && ((board[0][2].equals("O") || board[1][1].equals("O") || board[2][0].equals("O")))))
+        { //I have a feeling I just committed a crime against programming, but I am not sure how to get around it.
+            return true;
+        }
+        return false;
     }
 }
